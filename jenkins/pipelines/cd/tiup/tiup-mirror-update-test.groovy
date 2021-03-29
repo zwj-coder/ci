@@ -265,6 +265,19 @@ node("build_go1130") {
                         tidb_version = "${tidb_version}-nightly-${time}"
                     }
                 }
+            } else if( RELEASE_TAG == "v5.0.0-nightly") {
+                stage("Get version info when v5.0.0-nightly") {
+                    dir("tidb") {
+                        // sh"""
+                        // wget ${FILE_SERVER_URL}/download/builds/pingcap/tidb/${tidb_sha1}/centos7/tidb-server.tar.gz
+                        // tar xf tidb-server.tar.gz
+                        // """
+                        // tidb_version = sh(returnStdout: true, script: "./bin/tidb-server -V | awk 'NR==1{print \$NF}' | sed -r 's/(^[^-]*).*/\\1/'").trim()
+                        tidb_version = "v5.0.0"
+                        time = sh(returnStdout: true, script: "date '+%Y%m%d'").trim()
+                        tidb_version = "${tidb_version}-${time}"
+                    }
+                }
             } else {
                 tidb_version = RELEASE_TAG
             }
